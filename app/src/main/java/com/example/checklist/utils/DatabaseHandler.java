@@ -25,8 +25,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             "CREATE TABLE " + TODO_TABLE + "("
                     + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + TASK + " TEXT, "
-            + STATUS + " INTEGER)"
-            + TIME+ "TEXT)";
+                    + STATUS + " INTEGER, "
+                    + TIME + " TEXT)";
 
     private SQLiteDatabase db;
 
@@ -68,9 +68,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 if(cur.moveToFirst()){
                     do{
                         checkListModel task = new checkListModel();
-                        task.setId(cur.getInt(cur.getColumnIndex(ID)));
-                        task.setTask(cur.getString(cur.getColumnIndex(TASK)));
-                        task.setStatus(cur.getInt(cur.getColumnIndex(STATUS)));
+                        task.setId(cur.getInt(cur.getColumnIndexOrThrow(ID)));
+                        task.setTask(cur.getString(cur.getColumnIndexOrThrow(TASK)));
+                        task.setStatus(cur.getInt(cur.getColumnIndexOrThrow(STATUS)));
                         taskList.add(task);
                     }
                     while(cur.moveToNext());
@@ -79,8 +79,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
         finally {
             db.endTransaction();
-            assert cur != null;
-            cur.close();
+            if (cur != null) {
+                cur.close();
+            }
         }
         return taskList;
     }
