@@ -56,8 +56,8 @@ public class AddNewTask extends BottomSheetDialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        newTaskText = Objects.requireNonNull(getView()).findViewById(R.id.newTaskText);
-        newTaskSaveButton = getView().findViewById(R.id.newTaskButton);
+        newTaskText = requireView().findViewById(R.id.newTaskText);
+        newTaskSaveButton = requireView().findViewById(R.id.newTaskButton);
 
         boolean isUpdate = false;
 
